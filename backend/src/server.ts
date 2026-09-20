@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import path from 'path';
 import { initializeDatabase } from './config/database';
 // import { errorHandler } from './middleware/errorHandler';
 // import authRoutes from './routes/auth';
@@ -24,6 +25,10 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Serve frontend static files in production
+const publicPath = path.join(__dirname, '../public');
+app.use(express.static(publicPath));
 
 // app.use('/api/auth', authRoutes);
 // app.use('/api/auth', azureADRoutes);
