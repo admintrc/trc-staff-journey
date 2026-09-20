@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { initializeDatabase } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
+import azureADRoutes from './auth/azureAD';
 import staffRoutes from './routes/staff';
 import formsRoutes from './routes/forms';
 import reportsRoutes from './routes/reports';
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', azureADRoutes);
 app.use('/api/staff', staffRoutes);
 app.use('/api/forms', formsRoutes);
 app.use('/api/reports', reportsRoutes);
