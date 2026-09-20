@@ -38,15 +38,19 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        echo "Checking files..."
-        ls -la backend/dist | head -3 || echo "⚠ backend/dist not found"
-        ls -la frontend/build | head -3 || echo "⚠ frontend/build not found"
-        echo "Building Docker image..."
-        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
-        echo "Docker build completed successfully"
-        echo "Pushing to ACR..."
-        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-        echo "✓ Docker image pushed to ACR"
+        set -x
+        echo "=== Checking files ==="
+        pwd
+        ls -la backend/ | grep -E "(dist|package)" || true
+        ls -la frontend/ | grep -E "(build|package)" || true
+        echo ""
+        echo "=== Building Docker image ==="
+        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest . || { echo "Docker build failed"; exit 1; }
+        echo "✓ Docker build completed"
+        echo ""
+        echo "=== Pushing to ACR ==="
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest || { echo "Docker push failed"; exit 1; }
+        echo "✓ Image pushed to ACR"
     
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
