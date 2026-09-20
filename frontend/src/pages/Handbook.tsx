@@ -19,32 +19,32 @@ export default function Handbook() {
   const [selectedSection, setSelectedSection] = useState<HandbookSection | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchSections = async () => {
-    setLoading(true);
-    try {
-      const token = localStorage.getItem('accessToken');
-      let url = `${API_URL}/handbook`;
-
-      if (search) {
-        url = `${API_URL}/handbook/search?q=${encodeURIComponent(search)}`;
-      } else if (selectedPart !== 'all') {
-        url = `${API_URL}/handbook/part/${selectedPart}`;
-      }
-
-      const response = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setSections(search ? response.data.data.results : response.data.data.sections);
-      setSelectedSection(null);
-    } catch (error) {
-      console.error('Failed to fetch handbook:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchSections = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem('accessToken');
+        let url = `${API_URL}/handbook`;
+
+        if (search) {
+          url = `${API_URL}/handbook/search?q=${encodeURIComponent(search)}`;
+        } else if (selectedPart !== 'all') {
+          url = `${API_URL}/handbook/part/${selectedPart}`;
+        }
+
+        const response = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setSections(search ? response.data.data.results : response.data.data.sections);
+        setSelectedSection(null);
+      } catch (error) {
+        console.error('Failed to fetch handbook:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchSections();
   }, [search, selectedPart]);
 

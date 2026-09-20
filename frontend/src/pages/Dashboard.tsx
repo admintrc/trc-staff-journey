@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -19,7 +19,7 @@ interface DashboardMetrics {
 export default function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab] = useState('overview');
   const [metrics] = useState<DashboardMetrics>({
     totalStaff: 47,
     activeReviews: 6,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 interface StaffMember {
@@ -33,7 +33,7 @@ export default function StaffDirectory() {
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchStaff = async (pageNum: number = 1) => {
+  const fetchStaff = useCallback(async (pageNum: number = 1) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('accessToken');
@@ -55,11 +55,11 @@ export default function StaffDirectory() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, status]);
 
   useEffect(() => {
     fetchStaff(1);
-  }, [search, status]);
+  }, [fetchStaff]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
