@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -95,27 +95,40 @@ export default function Dashboard() {
         </div>
 
         <nav>
-          {['overview', 'staff', 'forms', 'handbook', 'reports'].map((tab) => (
+          {[
+            { tab: 'overview', label: 'Overview', path: '/dashboard' },
+            { tab: 'staff', label: 'Staff', path: '/staff' },
+            { tab: 'forms', label: 'Forms', path: '#' },
+            { tab: 'handbook', label: 'Handbook', path: '/handbook' },
+            { tab: 'reports', label: 'Reports', path: '#' },
+          ].map((item) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+              key={item.tab}
+              onClick={() => {
+                if (item.path.startsWith('/')) {
+                  navigate(item.path);
+                } else {
+                  setActiveTab(item.tab);
+                }
+              }}
               style={{
                 width: '100%',
                 padding: '12px',
                 border: 'none',
                 background:
-                  activeTab === tab ? 'rgba(255,255,255,0.2)' : 'transparent',
+                  activeTab === item.tab ? 'rgba(255,255,255,0.2)' : 'transparent',
                 color: 'white',
-                cursor: 'pointer',
+                cursor: item.path === '#' ? 'not-allowed' : 'pointer',
                 textAlign: 'left',
                 marginBottom: '0.5rem',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
                 transition: 'all 0.2s',
+                opacity: item.path === '#' ? 0.5 : 1,
               }}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {item.label}
             </button>
           ))}
         </nav>
