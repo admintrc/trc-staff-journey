@@ -1,18 +1,12 @@
 import express from 'express';
-import { authenticate, authorize } from '../middleware/auth';
+import { authenticate } from '../middleware/auth';
+import FormsController from '../controllers/formsController';
 
 const router = express.Router();
 
-router.get('/', authenticate, (req, res) => {
-  res.json({ message: 'Get all forms - to be implemented' });
-});
-
-router.post('/:formType', authenticate, (req, res) => {
-  res.json({ message: 'Submit form - to be implemented' });
-});
-
-router.get('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Get form details - to be implemented' });
-});
+router.get('/', authenticate, FormsController.getAvailableForms);
+router.get('/definition/:formType', authenticate, FormsController.getFormDefinition);
+router.get('/all', authenticate, FormsController.getAllForms);
+router.post('/submit', authenticate, FormsController.submitForm);
 
 export default router;

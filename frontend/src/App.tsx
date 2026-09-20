@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import StaffDirectory from './pages/StaffDirectory';
 import Handbook from './pages/Handbook';
+import Forms from './pages/Forms';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const queryClient = new QueryClient();
@@ -36,6 +37,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Handbook />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/forms"
+            element={
+              <ProtectedRoute>
+                <Forms />
               </ProtectedRoute>
             }
           />

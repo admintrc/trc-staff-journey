@@ -98,7 +98,7 @@ export default function Dashboard() {
           {[
             { tab: 'overview', label: 'Overview', path: '/dashboard' },
             { tab: 'staff', label: 'Staff', path: '/staff' },
-            { tab: 'forms', label: 'Forms', path: '#' },
+            { tab: 'forms', label: 'Forms', path: '/forms' },
             { tab: 'handbook', label: 'Handbook', path: '/handbook' },
             { tab: 'reports', label: 'Reports', path: '#' },
           ].map((item) => (
