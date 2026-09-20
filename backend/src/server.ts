@@ -9,6 +9,8 @@ import authRoutes from './routes/auth';
 import staffRoutes from './routes/staff';
 import formsRoutes from './routes/forms';
 import reportsRoutes from './routes/reports';
+import User from './models/User';
+import Staff from './models/Staff';
 
 dotenv.config();
 

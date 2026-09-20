@@ -1,22 +1,34 @@
 import express from 'express';
+import { body } from 'express-validator';
 import { authenticate } from '../middleware/auth';
+import AuthController from '../controllers/authController';
 
 const router = express.Router();
 
-router.post('/register', (req, res) => {
-  res.json({ message: 'Register endpoint - to be implemented' });
-});
+router.post(
+  '/register',
+  [
+    body('email').isEmail().normalizeEmail(),
+    body('password').isLength({ min: 8 }),
+    body('firstName').trim().notEmpty(),
+    body('lastName').trim().notEmpty(),
+  ],
+  AuthController.register
+);
 
-router.post('/login', (req, res) => {
-  res.json({ message: 'Login endpoint - to be implemented' });
-});
+router.post(
+  '/login',
+  [
+    body('email').isEmail().normalizeEmail(),
+    body('password').notEmpty(),
+  ],
+  AuthController.login
+);
 
-router.post('/logout', authenticate, (req, res) => {
-  res.json({ message: 'Logout endpoint - to be implemented' });
-});
+router.post('/logout', authenticate, AuthController.logout);
 
-router.post('/refresh-token', (req, res) => {
-  res.json({ message: 'Refresh token endpoint - to be implemented' });
-});
+router.post('/refresh-token', AuthController.refreshToken);
+
+router.get('/me', authenticate, AuthController.getCurrentUser);
 
 export default router;
