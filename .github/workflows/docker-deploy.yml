@@ -1,0 +1,40 @@
+name: Build and Deploy Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: trcstaffjourneyacr.azurecr.io
+  IMAGE_NAME: trc-staff-journey-app
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Log in to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        echo "✓ Docker image pushed to ACR"
+    
+    - name: Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: trc-staff-journey-api
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        slot-name: production
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+
