@@ -1,0 +1,6 @@
+location              = "australiaeast"
+resource_group_name  = "trc-staff-journey-rg"
+db_admin_login       = "trcadmin"
+db_admin_password    = "YourSecurePassword123!"
+storage_account_name = "trcstaffjourney"
+environment          = "dev"
