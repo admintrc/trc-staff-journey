@@ -75,7 +75,7 @@ const mockHandbook = {
 // Auth endpoints
 app.post('/api/auth/login', (req, res) => {
   const { email, password } = req.body;
-  const user = mockUsers[email];
+  const user = mockUsers[email as keyof typeof mockUsers];
 
   if (!user || user.password !== password) {
     return res.status(401).json({ error: 'Invalid credentials' });
@@ -101,7 +101,7 @@ app.get('/api/auth/current-user', (req, res) => {
   if (!auth) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    const decoded = jwt.verify(auth.split(' ')[1], JWT_SECRET);
+    const decoded = jwt.verify(auth.split(' ')[1], JWT_SECRET) as any;
     const user = Object.values(mockUsers).find(u => u.id === decoded.id);
     res.json({ data: user });
   } catch {
@@ -148,7 +148,7 @@ app.get('/api/handbook/partB', (req, res) => {
 });
 
 app.get('/api/handbook/search', (req, res) => {
-  const query = req.query.q || '';
+  const query = (req.query.q as string) || '';
   const results = mockHandbook.partA.sections.filter(s =>
     s.title.toLowerCase().includes(query.toLowerCase()) ||
     s.content.toLowerCase().includes(query.toLowerCase())
