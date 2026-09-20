@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRC Staff Journey - Forms</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f1eb; }
+        .container { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 250px;
+            background: #82181b;
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .logo { text-align: center; margin-bottom: 2rem; }
+        .logo-box {
+            width: 50px; height: 50px;
+            background: #ed2d29;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+        .nav button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .nav button:hover, .nav button.active { background: rgba(255,255,255,0.2); }
+        .main { flex: 1; }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e0dcd5;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .content { padding: 2rem; display: grid; grid-template-columns: 250px 1fr; gap: 2rem; }
+        h1 { color: #82181b; margin-bottom: 1.5rem; font-size: 24px; }
+        h3 { color: #82181b; margin-top: 0; margin-bottom: 1rem; font-size: 14px; }
+        .form-list {
+            border: 1px solid #e0dcd5;
+            border-radius: 6px;
+            overflow: hidden;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .form-item {
+            padding: 12px;
+            border-bottom: 1px solid #e0dcd5;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+        .form-item:last-child { border-bottom: none; }
+        .form-item:hover { background: #f5f1eb; }
+        .form-item.active { background: #f5f1eb; border-left: 3px solid #82181b; }
+        .form-id {
+            font-weight: 600;
+            color: #82181b;
+            font-size: 13px;
+        }
+        .form-title {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .form-content {
+            background: white;
+            border: 1px solid #e0dcd5;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0dcd5;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #82181b;
+            box-shadow: 0 0 0 3px rgba(130, 24, 27, 0.1);
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #82181b;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #ed2d29;
+        }
+        .btn-secondary {
+            background: #e0dcd5;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #d0ccc5;
+        }
+        .form-description {
+            background: #f9f8f6;
+            border-left: 3px solid #ed2d29;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+        .form-description p { margin: 0; color: #666; font-size: 13px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-box">TRC</div>
+                <h2 style="font-size: 18px; text-align: center; margin-top: 0;">Staff Journey</h2>
+            </div>
+            <nav class="nav">
+                <button onclick="goTo('dashboard')">Overview</button>
+                <button onclick="goTo('staff')">Staff</button>
+                <button onclick="goTo('forms')" class="active">Forms</button>
+                <button onclick="goTo('handbook')">Handbook</button>
+                <button onclick="goTo('reports')">Reports</button>
+            </nav>
+            <button style="width: 100%; padding: 12px; border: none; background: rgba(255,255,255,0.1); color: white; cursor: pointer; margin-top: 2rem; border-radius: 6px; font-size: 14px; font-weight: 500;">Logout</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <h1 style="margin: 0 0 0.25rem 0; font-size: 24px; color: #82181b;">Welcome, Alex</h1>
+                    <p style="margin: 0; font-size: 14px; color: #999;">Manager • alex.smith@trc.org</p>
+                </div>
+                <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #82181b, #ed2d29); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">AS</div>
+            </header>
+
+            <!-- Forms Content -->
+            <div class="content">
+                <!-- Form List Sidebar -->
+                <div>
+                    <h3>Available Forms</h3>
+                    <div class="form-list">
+                        <div class="form-item active" onclick="selectForm(this, 'c1')">
+                            <div class="form-id">C1</div>
+                            <div class="form-title">Pre-Recruitment Checklist</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c2')">
+                            <div class="form-id">C2</div>
+                            <div class="form-title">Selection Process</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c3')">
+                            <div class="form-id">C3</div>
+                            <div class="form-title">Offer Letter</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c4')">
+                            <div class="form-id">C4</div>
+                            <div class="form-title">Induction Checklist</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c5')">
+                            <div class="form-id">C5</div>
+                            <div class="form-title">Probation Review</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c6')">
+                            <div class="form-id">C6</div>
+                            <div class="form-title">Performance Review</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c7')">
+                            <div class="form-id">C7</div>
+                            <div class="form-title">Training Record</div>
+                        </div>
+                        <div class="form-item" onclick="selectForm(this, 'c8')">
+                            <div class="form-id">C8</div>
+                            <div class="form-title">Exit Interview</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Content -->
+                <div>
+                    <div id="c1" class="form-content" style="display: block;">
+                        <h1 style="margin-top: 0;">C1: Pre-Recruitment Checklist</h1>
+                        <div class="form-description">
+                            <p><strong>Purpose:</strong> Verify all pre-recruitment requirements are met before job posting. Ensure budget approval, position description, and compliance checks.</p>
+                        </div>
+
+                        <form onsubmit="handleSubmit(event)">
+                            <div class="form-group">
+                                <label>Position Title *</label>
+                                <input type="text" placeholder="e.g., Senior Therapist" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Department *</label>
+                                <select required>
+                                    <option value="">Select Department</option>
+                                    <option value="clinical">Clinical Services</option>
+                                    <option value="admin">Administration</option>
+                                    <option value="operations">Operations</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Budget Approval Status *</label>
+                                <select required>
+                                    <option value="">Select Status</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="denied">Denied</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Position Description Completed *</label>
+                                <select required>
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Notes</label>
+                                <textarea placeholder="Additional notes..."></textarea>
+                            </div>
+
+                            <div class="button-group">
+                                <button type="submit" class="btn btn-primary">Submit Form</button>
+                                <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="c2" class="form-content" style="display: none;">
+                        <h1 style="margin-top: 0;">C2: Selection Process</h1>
+                        <div class="form-description">
+                            <p><strong>Purpose:</strong> Document candidate screening and interview process. Track all applicants and selection decisions.</p>
+                        </div>
+                        <p style="color: #999;">Form content placeholder - C2 Selection Process form fields would load here</p>
+                    </div>
+
+                    <div id="c3" class="form-content" style="display: none;">
+                        <h1 style="margin-top: 0;">C3: Offer Letter</h1>
+                        <div class="form-description">
+                            <p><strong>Purpose:</strong> Prepare and track offer letters sent to selected candidates with salary, benefits, and start date.</p>
+                        </div>
+                        <p style="color: #999;">Form content placeholder - C3 Offer Letter form fields would load here</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function selectForm(element, formId) {
+            // Update active class
+            document.querySelectorAll('.form-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Hide all forms
+            document.querySelectorAll('.form-content').forEach(form => {
+                form.style.display = 'none';
+            });
+
+            // Show selected form
+            const form = document.getElementById(formId);
+            if (form) {
+                form.style.display = 'block';
+            }
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('✓ Form submitted successfully!\n\nThe form data would be sent to the backend API for processing and storage.');
+            resetForm();
+        }
+
+        function resetForm() {
+            document.querySelector('form').reset();
+        }
+
+        function goTo(page) {
+            if (page !== 'forms') {
+                alert('Navigation to ' + page + ' page (demo would redirect here)');
+            }
+        }
+    </script>
+</body>
+</html>
