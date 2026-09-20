@@ -9,6 +9,7 @@ import authRoutes from './routes/auth';
 import staffRoutes from './routes/staff';
 import formsRoutes from './routes/forms';
 import reportsRoutes from './routes/reports';
+import handbookRoutes from './routes/handbook';
 import User from './models/User';
 import Staff from './models/Staff';
 
@@ -27,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/staff', staffRoutes);
 app.use('/api/forms', formsRoutes);
 app.use('/api/reports', reportsRoutes);
+app.use('/api/handbook', handbookRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });

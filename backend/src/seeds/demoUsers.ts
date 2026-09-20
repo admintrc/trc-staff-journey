@@ -35,14 +35,16 @@ export const seedDemoUsers = async () => {
 
     for (const userData of users) {
       const passwordHash = await AuthService.hashPassword(userData.password);
-      await User.create({
-        email: userData.email,
-        passwordHash,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        role: userData.role,
-        status: 'active',
-      });
+      await User.create(
+        {
+          email: userData.email,
+          passwordHash,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          role: userData.role,
+          status: 'active',
+        } as any
+      );
       console.log(`✓ Created ${userData.role} user: ${userData.email}`);
     }
   } catch (error) {

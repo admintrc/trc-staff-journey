@@ -1,22 +1,12 @@
 import express from 'express';
 import { authenticate, authorize } from '../middleware/auth';
+import StaffController from '../controllers/staffController';
 
 const router = express.Router();
 
-router.get('/', authenticate, (req, res) => {
-  res.json({ message: 'Get all staff - to be implemented' });
-});
-
-router.get('/me', authenticate, (req, res) => {
-  res.json({ message: 'Get current staff member profile - to be implemented' });
-});
-
-router.post('/', authenticate, authorize(['director', 'manager']), (req, res) => {
-  res.json({ message: 'Create staff member - to be implemented' });
-});
-
-router.put('/:id', authenticate, authorize(['director', 'manager']), (req, res) => {
-  res.json({ message: 'Update staff member - to be implemented' });
-});
+router.get('/', authenticate, StaffController.getAllStaff);
+router.get('/stats', authenticate, StaffController.getDashboardStats);
+router.get('/:id', authenticate, StaffController.getStaffById);
+router.post('/', authenticate, authorize(['director', 'manager']), StaffController.createStaff);
 
 export default router;

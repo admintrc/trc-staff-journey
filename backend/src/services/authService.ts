@@ -34,13 +34,17 @@ export class AuthService {
       lastName: user.lastName,
     };
 
-    const accessToken = jwt.sign(payload, process.env.JWT_SECRET || 'secret', {
-      expiresIn: process.env.JWT_EXPIRES_IN || '24h',
-    });
+    const accessToken = jwt.sign(
+      payload,
+      process.env.JWT_SECRET || 'secret',
+      { expiresIn: process.env.JWT_EXPIRES_IN || '24h' } as any
+    );
 
-    const refreshToken = jwt.sign(payload, process.env.JWT_SECRET || 'secret', {
-      expiresIn: '7d',
-    });
+    const refreshToken = jwt.sign(
+      payload,
+      process.env.JWT_SECRET || 'secret',
+      { expiresIn: '7d' } as any
+    );
 
     return { accessToken, refreshToken };
   }
@@ -68,14 +72,16 @@ export class AuthService {
 
     const passwordHash = await this.hashPassword(password);
 
-    const user = await User.create({
-      email,
-      passwordHash,
-      firstName,
-      lastName,
-      role,
-      status: 'active',
-    });
+    const user = await User.create(
+      {
+        email,
+        passwordHash,
+        firstName,
+        lastName,
+        role,
+        status: 'active',
+      } as any
+    );
 
     return user;
   }
