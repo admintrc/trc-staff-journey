@@ -196,7 +196,6 @@ export default function StaffDirectory() {
                   key={member.id}
                   style={{
                     borderBottom: '1px solid #e0dcd5',
-                    '&:hover': { background: '#f5f1eb' },
                   }}
                   onMouseOver={(e) => (e.currentTarget.style.background = '#f5f1eb')}
                   onMouseOut={(e) => (e.currentTarget.style.background = 'white')}

@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import StaffDirectory from './pages/StaffDirectory';
 import Handbook from './pages/Handbook';
 import Forms from './pages/Forms';
+import Reports from './pages/Reports';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const queryClient = new QueryClient();
@@ -45,6 +46,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Forms />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute>
+                <Reports />
               </ProtectedRoute>
             }
           />

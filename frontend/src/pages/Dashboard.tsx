@@ -100,16 +100,12 @@ export default function Dashboard() {
             { tab: 'staff', label: 'Staff', path: '/staff' },
             { tab: 'forms', label: 'Forms', path: '/forms' },
             { tab: 'handbook', label: 'Handbook', path: '/handbook' },
-            { tab: 'reports', label: 'Reports', path: '#' },
+            { tab: 'reports', label: 'Reports', path: '/reports' },
           ].map((item) => (
             <button
               key={item.tab}
               onClick={() => {
-                if (item.path.startsWith('/')) {
-                  navigate(item.path);
-                } else {
-                  setActiveTab(item.tab);
-                }
+                navigate(item.path);
               }}
               style={{
                 width: '100%',
@@ -118,14 +114,13 @@ export default function Dashboard() {
                 background:
                   activeTab === item.tab ? 'rgba(255,255,255,0.2)' : 'transparent',
                 color: 'white',
-                cursor: item.path === '#' ? 'not-allowed' : 'pointer',
+                cursor: 'pointer',
                 textAlign: 'left',
                 marginBottom: '0.5rem',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
                 transition: 'all 0.2s',
-                opacity: item.path === '#' ? 0.5 : 1,
               }}
             >
               {item.label}
