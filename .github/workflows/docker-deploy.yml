@@ -38,7 +38,12 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
+        echo "Checking files..."
+        ls -la backend/dist | head -5
+        ls -la frontend/build | head -5
+        echo "Building Docker image..."
+        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest . --progress=plain 2>&1
+        echo "Pushing to ACR..."
         docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         echo "✓ Docker image pushed to ACR"
     
